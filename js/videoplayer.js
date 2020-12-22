@@ -38,10 +38,16 @@ export const videoPlayerInit = () => {
         videoButtonStop.classList.add('fa-stop');
         videoButtonStop.classList.remove('fa-refresh');
     }
+    /**
+     * Устанавливает иконку видео "Звук есть"
+     */
     const setVolumeIconTrue = () => {
         videoButtonVolume.classList.add('fa-volume-up');
         videoButtonVolume.classList.remove('fa-volume-off');
     }
+    /**
+     * Устанавливает иконку видео "Звук отключен"
+     */
     const setVolumeIconFalse = () => {
         videoButtonVolume.classList.remove('fa-volume-up');
         videoButtonVolume.classList.add('fa-volume-off');
@@ -125,8 +131,10 @@ export const videoPlayerInit = () => {
        videoProgress.value = currentTime/duration*100;
 
    });
+    /**
+     * Переключает звук видео (вкл/выкл)
+     */
    const toggleVolume = () => {
-       console.log(videoPlayer.muted);
        if(videoPlayer.muted === true){
            videoPlayer.muted = false;
            setVolumeIconTrue();
