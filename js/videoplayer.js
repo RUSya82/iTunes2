@@ -24,7 +24,7 @@ export const videoPlayerInit = () => {
    }
 
     /**
-     * меняет иконку стоп на начать заново
+     * устанавливает иконку в "refresh"
      */
    const setRefreshIcon = () => {
        videoButtonStop.classList.remove('fa-stop');
@@ -48,7 +48,7 @@ export const videoPlayerInit = () => {
        }else {
            videoPlayer.pause();
            setPlayIcon();
-           setRefreshIcon();
+           setRefreshIcon();        //при паузе есть возможность начать видео сначала
        }
    }
 
@@ -63,31 +63,49 @@ export const videoPlayerInit = () => {
 
     /**
      * Добавление нуля, если число меньше 10 (для красоты)
-     * @param number
+     * @param number(int)
      * @returns {*}
      */
    const addZero = number => (+number < 10) ? ('0' + number) : number;
 
+    /**
+     * обработка нажатияна само окно плеера
+     */
    videoPlayer.addEventListener('click', videoPlayerToggle);
+
+    /**
+     * обработка нажатия на кнопку плеера
+     */
    videoButtonPlay.addEventListener('click', videoPlayerToggle);
+
+    /**
+     * Обработка нажатия на кнопку стоп
+     */
    videoButtonStop.addEventListener('click', () => {
        stopPlay();
-       if(videoButtonStop.classList.contains('fa-refresh')){
+       if(videoButtonStop.classList.contains('fa-refresh')){    //тут наверное грамотнее data-state использовать?
             videoPlayerToggle();
        }
    });
+
     /**
      * Когда видео закончилось
      */
    videoPlayer.addEventListener('ended', () =>{
-       setPlayIcon();
-       videoProgress.value = 0;
+       setPlayIcon();       //меняем иконку
+       videoProgress.value = 0;     //сбрасываем прогресс на ноль
    })
 
+    /**
+     * Когда видео проигрывается, меняем положение ползунка и время
+     */
    videoPlayer.addEventListener('timeupdate', () => {
-       let currentTime = videoPlayer.currentTime;
-       let duration = videoPlayer.duration;
-
+       let currentTime = videoPlayer.currentTime;       //текущее время
+       let duration = videoPlayer.duration;             //полное время видео
+       /*
+        пытался получить duration вне addEventListener - не работает, чтобы время
+        minuteTotal и secondTotal постоянно не изменять, они же одинаковые всё время
+       */
        let minutePassed = addZero(Math.floor(currentTime/60));
        let secondPassed = addZero(Math.floor(currentTime % 60));
        let minuteTotal = addZero(Math.floor(duration/60));
@@ -99,6 +117,9 @@ export const videoPlayerInit = () => {
 
    });
 
+    /**
+     * обработка изменения прогресса(range) видео
+     */
    videoProgress.addEventListener('change', () => {
        let duration = videoPlayer.duration;
        let newValue = videoProgress.value;
