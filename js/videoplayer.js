@@ -1,11 +1,12 @@
 export const videoPlayerInit = () => {
    const videoPlayer = document.querySelector('.video-player');
    const videoButtonPlay = document.querySelector('.video-button__play');
-   const videoButtonStop = document.getElementsByClassName('video-button__stop')[0];
    const videoTimePassed = document.querySelector('.video-time__passed');
    const videoProgress = document.querySelector('.video-progress');
    const videoTimeTotal = document.querySelector('.video-time__total');
    const videoButtonVolume = document.querySelector('.video-button__volume');
+   //Живые коллекции для ползунков
+    const videoButtonStop = document.getElementsByClassName('video-button__stop')[0];
    const videoVolumeProgress = document.getElementsByClassName('video-volume__progress')[0];
 
 
@@ -149,10 +150,8 @@ export const videoPlayerInit = () => {
    const toggleVolume = () => {
        if(videoPlayer.muted === true){
            videoPlayer.muted = false;
-           setVolumeIconTrue();
        }else{
            videoPlayer.muted = true;
-           setVolumeIconFalse();
        }
    }
 
@@ -165,26 +164,26 @@ export const videoPlayerInit = () => {
        videoPlayer.currentTime = (newValue * duration) /100;
    })
     /**
-     *
+     *  включаем и отключаем звук по кнопке звука
      */
-    videoButtonVolume.addEventListener('click',() => {
-        toggleVolume();
-    })
+    videoButtonVolume.addEventListener('click',toggleVolume);
 
     /**
-     *
+     *  Если меняем ползунок управления звуком
      */
     videoVolumeProgress.addEventListener('change', () => {
         let newVolumeValue = videoVolumeProgress.value;
         videoPlayer.volume  = newVolumeValue/100;
     })
 
-
+    /**
+     * Событие изменения звука
+     */
     videoPlayer.addEventListener('volumechange', () => {
         let currentVolume = videoPlayer.volume;
         videoVolumeProgress.value = currentVolume*100;
-        //меняем иконку наличия звука
-        if(currentVolume === 0){
+        //меняем иконку наличия звука если он на нуле или muted
+        if(currentVolume === 0 || videoPlayer.muted){
             setVolumeIconFalse();
         }else{
             setVolumeIconTrue();
