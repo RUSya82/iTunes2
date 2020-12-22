@@ -6,6 +6,18 @@ export const videoPlayerInit = () => {
    const videoProgress = document.querySelector('.video-progress');
    const videoTimeTotal = document.querySelector('.video-time__total');
    const videoButtonVolume = document.querySelector('.video-button__volume');
+   const videoVolumeProgress = document.getElementsByClassName('video-volume__progress')[0];
+
+
+    /**
+     * Устанавливает начальное значение громкости
+     * @param vol
+     */
+   const setInitVolume = (vol) => {
+       videoPlayer.volume = vol;
+   }
+
+   setInitVolume(0.5);
 
 
     /**
@@ -152,9 +164,31 @@ export const videoPlayerInit = () => {
        let newValue = videoProgress.value;
        videoPlayer.currentTime = (newValue * duration) /100;
    })
+    /**
+     *
+     */
     videoButtonVolume.addEventListener('click',() => {
         toggleVolume();
     })
 
+    /**
+     *
+     */
+    videoVolumeProgress.addEventListener('change', () => {
+        let newVolumeValue = videoVolumeProgress.value;
+        videoPlayer.volume  = newVolumeValue/100;
+    })
+
+
+    videoPlayer.addEventListener('volumechange', () => {
+        let currentVolume = videoPlayer.volume;
+        videoVolumeProgress.value = currentVolume*100;
+        //меняем иконку наличия звука
+        if(currentVolume === 0){
+            setVolumeIconFalse();
+        }else{
+            setVolumeIconTrue();
+        }
+    })
 
 }

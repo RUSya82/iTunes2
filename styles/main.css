@@ -1,0 +1,17 @@
+.video-button__volume{
+    width: 15px;
+}
+.volume-container{
+    position: relative;
+}
+.volume-container .video-volume__progress{
+    position: absolute;
+    left: -22px;
+    top: -65px;
+    transform: rotate(-90deg);
+    width: 100px;
+    display: none;
+}
+.volume-container:hover .video-volume__progress{
+    display: block;
+}
