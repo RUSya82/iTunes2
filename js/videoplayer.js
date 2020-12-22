@@ -141,7 +141,7 @@ export const videoPlayerInit = () => {
 
        videoTimePassed.textContent = `${minutePassed}:${secondPassed}`;
        videoTimeTotal.textContent = `${minuteTotal}:${secondTotal}`;
-       //videoProgress.value = currentTime/duration*100;
+       videoProgress.value = currentTime/duration*100;
 
    });
     /**
