@@ -5,6 +5,7 @@ export const videoPlayerInit = () => {
    const videoTimePassed = document.querySelector('.video-time__passed');
    const videoProgress = document.querySelector('.video-progress');
    const videoTimeTotal = document.querySelector('.video-time__total');
+   const videoButtonVolume = document.querySelector('.video-button__volume');
 
 
     /**
@@ -36,6 +37,14 @@ export const videoPlayerInit = () => {
     const setStopIcon = () => {
         videoButtonStop.classList.add('fa-stop');
         videoButtonStop.classList.remove('fa-refresh');
+    }
+    const setVolumeIconTrue = () => {
+        videoButtonVolume.classList.add('fa-volume-up');
+        videoButtonVolume.classList.remove('fa-volume-off');
+    }
+    const setVolumeIconFalse = () => {
+        videoButtonVolume.classList.remove('fa-volume-up');
+        videoButtonVolume.classList.add('fa-volume-off');
     }
     /**
      * включение/отключение (пауза) видеоплеера
@@ -116,6 +125,16 @@ export const videoPlayerInit = () => {
        videoProgress.value = currentTime/duration*100;
 
    });
+   const toggleVolume = () => {
+       console.log(videoPlayer.muted);
+       if(videoPlayer.muted === true){
+           videoPlayer.muted = false;
+           setVolumeIconTrue();
+       }else{
+           videoPlayer.muted = true;
+           setVolumeIconFalse();
+       }
+   }
 
     /**
      * обработка изменения прогресса(range) видео
@@ -125,5 +144,9 @@ export const videoPlayerInit = () => {
        let newValue = videoProgress.value;
        videoPlayer.currentTime = (newValue * duration) /100;
    })
+    videoButtonVolume.addEventListener('click',() => {
+        toggleVolume();
+    })
+
 
 }
