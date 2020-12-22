@@ -5,7 +5,7 @@ export const videoPlayerInit = () => {
    const videoProgress = document.querySelector('.video-progress');
    const videoTimeTotal = document.querySelector('.video-time__total');
    const videoButtonVolume = document.querySelector('.video-button__volume');
-   //Живые коллекции для ползунков
+   //Живые коллекции
     const videoButtonStop = document.getElementsByClassName('video-button__stop')[0];
    const videoVolumeProgress = document.getElementsByClassName('video-volume__progress')[0];
 
@@ -141,7 +141,7 @@ export const videoPlayerInit = () => {
 
        videoTimePassed.textContent = `${minutePassed}:${secondPassed}`;
        videoTimeTotal.textContent = `${minuteTotal}:${secondTotal}`;
-       videoProgress.value = currentTime/duration*100;
+       //videoProgress.value = currentTime/duration*100;
 
    });
     /**
