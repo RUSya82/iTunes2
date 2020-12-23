@@ -1,3 +1,4 @@
+import {volumeInit} from "./volumeInit.js";
 export const radioPlayerInit = () => {
     let radio = document.querySelector('.radio');
     let radioCoverImg = document.querySelector('.radio-cover__img');
@@ -15,48 +16,15 @@ export const radioPlayerInit = () => {
 
     radioStop.disabled = true;
 
-    const setInitVolume = (vol) => {
-        audio.volume = vol;
-    }
+    let data = {
+        buttonVolume: radioButtonVolume,
+        volumeProgress: radioVolumeProgress,
+        player: audio,
+        volumeStart: 0.5,
 
-    /**
-     * Устанавливает иконку видео "Звук есть"
-     */
-    const setVolumeIconTrue = () => {
-        radioButtonVolume.classList.add('fa-volume-up');
-        radioButtonVolume.classList.remove('fa-volume-off');
-    }
-    /**
-     * Устанавливает иконку видео "Звук отключен"
-     */
-    const setVolumeIconFalse = () => {
-        radioButtonVolume.classList.remove('fa-volume-up');
-        radioButtonVolume.classList.add('fa-volume-off');
-    }
+    };
+    volumeInit(data);
 
-    setInitVolume(0.5);
-
-
-    /**
-     * Переключает звук видео (вкл/выкл)
-     */
-    const toggleVolume = () => {
-        if(audio.muted === true){
-            audio.muted = false;
-        }else{
-            audio.muted = true;
-        }
-    }
-
-    radioButtonVolume.addEventListener('click',toggleVolume);
-
-    /**
-     *  Если меняем ползунок управления звуком
-     */
-    radioVolumeProgress.addEventListener('change', () => {
-        let newVolumeValue = radioVolumeProgress.value;
-        audio.volume  = newVolumeValue/100;
-    })
 
     const setPlayIcon = () => {
         radioStop.classList.remove('fa-stop');
@@ -73,19 +41,6 @@ export const radioPlayerInit = () => {
         station.classList.add('select');
     }
 
-    /**
-     * Событие изменения звука
-     */
-    audio.addEventListener('volumechange', () => {
-        let currentVolume = audio.volume;
-        radioVolumeProgress.value = currentVolume*100;
-        //меняем иконку наличия звука если он на нуле или muted
-        if(currentVolume === 0 || audio.muted){
-            setVolumeIconFalse();
-        }else{
-            setVolumeIconTrue();
-        }
-    })
 
     audio.addEventListener('play', () => {
         setStopIcon();

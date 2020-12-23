@@ -1,4 +1,6 @@
+import {volumeInit} from "./volumeInit.js";
 export const videoPlayerInit = () => {
+
    const videoPlayer = document.querySelector('.video-player');
    const videoButtonPlay = document.querySelector('.video-button__play');
    const videoTimePassed = document.querySelector('.video-time__passed');
@@ -9,16 +11,15 @@ export const videoPlayerInit = () => {
     const videoButtonStop = document.getElementsByClassName('video-button__stop')[0];
    const videoVolumeProgress = document.getElementsByClassName('video-volume__progress')[0];
 
+   let data = {
+       buttonVolume: videoButtonVolume,
+       volumeProgress: videoVolumeProgress,
+       player: videoPlayer,
+       volumeStart: 0.5,
 
-    /**
-     * Устанавливает начальное значение громкости
-     * @param vol
-     */
-   const setInitVolume = (vol) => {
-       videoPlayer.volume = vol;
-   }
+   };
+    volumeInit(data);
 
-   setInitVolume(0.5);
 
 
     /**
@@ -51,20 +52,7 @@ export const videoPlayerInit = () => {
         videoButtonStop.classList.add('fa-stop');
         videoButtonStop.classList.remove('fa-refresh');
     }
-    /**
-     * Устанавливает иконку видео "Звук есть"
-     */
-    const setVolumeIconTrue = () => {
-        videoButtonVolume.classList.add('fa-volume-up');
-        videoButtonVolume.classList.remove('fa-volume-off');
-    }
-    /**
-     * Устанавливает иконку видео "Звук отключен"
-     */
-    const setVolumeIconFalse = () => {
-        videoButtonVolume.classList.remove('fa-volume-up');
-        videoButtonVolume.classList.add('fa-volume-off');
-    }
+
     /**
      * включение/отключение (пауза) видеоплеера
      */
@@ -145,16 +133,7 @@ export const videoPlayerInit = () => {
         videoProgress.value = currentTime/duration*100;
 
    });
-    /**
-     * Переключает звук видео (вкл/выкл)
-     */
-   const toggleVolume = () => {
-       if(videoPlayer.muted === true){
-           videoPlayer.muted = false;
-       }else{
-           videoPlayer.muted = true;
-       }
-   }
+
 
     /**
      * обработка изменения прогресса(range) видео
@@ -166,31 +145,7 @@ export const videoPlayerInit = () => {
        console.log(newValue);
        videoPlayer.currentTime = (newValue * duration) /100;
    })
-    /**
-     *  включаем и отключаем звук по кнопке звука
-     */
-    videoButtonVolume.addEventListener('click',toggleVolume);
 
-    /**
-     *  Если меняем ползунок управления звуком
-     */
-    videoVolumeProgress.addEventListener('change', () => {
-        let newVolumeValue = videoVolumeProgress.value;
-        videoPlayer.volume  = newVolumeValue/100;
-    })
 
-    /**
-     * Событие изменения звука
-     */
-    videoPlayer.addEventListener('volumechange', () => {
-        let currentVolume = videoPlayer.volume;
-        videoVolumeProgress.value = currentVolume*100;
-        //меняем иконку наличия звука если он на нуле или muted
-        if(currentVolume === 0 || videoPlayer.muted){
-            setVolumeIconFalse();
-        }else{
-            setVolumeIconTrue();
-        }
-    })
 
 }
