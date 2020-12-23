@@ -86,6 +86,7 @@ export const videoPlayerInit = () => {
    const stopPlay = () => {
        videoPlayer.pause();
        videoPlayer.currentTime = 0;
+        videoProgress.value = 0;
        setPlayIcon();
    }
 
@@ -141,7 +142,7 @@ export const videoPlayerInit = () => {
 
        videoTimePassed.textContent = `${minutePassed}:${secondPassed}`;
        videoTimeTotal.textContent = `${minuteTotal}:${secondTotal}`;
-       videoProgress.value = currentTime/duration*100;
+        videoProgress.value = currentTime/duration*100;
 
    });
     /**
@@ -158,9 +159,11 @@ export const videoPlayerInit = () => {
     /**
      * обработка изменения прогресса(range) видео
      */
-   videoProgress.addEventListener('change', () => {
+   videoProgress.addEventListener('input', () => {
+       //console.log(111);
        let duration = videoPlayer.duration;
        let newValue = videoProgress.value;
+       console.log(newValue);
        videoPlayer.currentTime = (newValue * duration) /100;
    })
     /**

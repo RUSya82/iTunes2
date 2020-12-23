@@ -15,3 +15,8 @@
 .volume-container:hover .video-volume__progress{
     display: block;
 }
+.radio-button__volume{
+    color: #0F1E36;
+    display: block;
+    font-size: 30px;
+}
