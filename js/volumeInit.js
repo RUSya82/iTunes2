@@ -21,6 +21,8 @@ export const volumeInit = (data) => {
         */
        const setInitVolume = (vol) => {
            player.volume = vol;
+           let currentVolume = player.volume;
+           volumeProgress.value = currentVolume * 100;
        }
 
        setInitVolume(volumeStart);

@@ -1,5 +1,6 @@
 import { addZero } from "./functions.js";
 import {getNextIndexInArr, getPrevIndexInArr} from "./functions.js";
+import {volumeInit} from "./volumeInit.js";
 
 export const audioPlayerInit = () => {
     const audioHeader = document.querySelector('.audio-header');
@@ -14,10 +15,23 @@ export const audioPlayerInit = () => {
     const audioProgressTiming  = document.querySelector('.audio-progress__timing');
     const audioTimeTotal = document.querySelector('.audio-time__total');
     const audioNavigation= document.querySelector('.audio-navigation');
+    const audioButtonVolume= document.querySelector('.audio-button__volume');
+    const audioVolumeProgress= document.querySelector('.audio-volume__progress');
+
+
 
     let playList = ['flow', 'hello', 'speed'];
 
     let currentTrack = 0;
+
+    let data = {
+        buttonVolume: audioButtonVolume,
+        volumeProgress: audioVolumeProgress,
+        player: audioPlayer,
+        volumeStart: 0.5,
+
+    };
+    volumeInit(data);
 
 
 
